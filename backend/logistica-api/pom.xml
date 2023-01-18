@@ -44,6 +44,17 @@
 			<optional>true</optional>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		
 		<!-- 
 		  Adicionado a dependência apenas para  conhecimento,  caso ocorra a necessidade de utilizar o formato xml em sistemas legados.
 		  Utilizada para serializar e deserializar objetos, fazendo  a transformação de objetos  java em outros formatos.
@@ -53,7 +64,6 @@
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-xml</artifactId>
 		</dependency>
-		
 	</dependencies>
 
 	<build>
