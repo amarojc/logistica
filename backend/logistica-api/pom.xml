@@ -43,7 +43,17 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
-	
+		
+		<!-- 
+		  Adicionado a dependência apenas para  conhecimento,  caso ocorra a necessidade de utilizar o formato xml em sistemas legados.
+		  Utilizada para serializar e deserializar objetos, fazendo  a transformação de objetos  java em outros formatos.
+		  Por padrão o Spring utiliza o formato json.
+		 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
