@@ -55,6 +55,16 @@
 			<scope>runtime</scope>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-mysql</artifactId>
+		</dependency>
+		
 		<!-- 
 		  Adicionado a dependência apenas para  conhecimento,  caso ocorra a necessidade de utilizar o formato xml em sistemas legados.
 		  Utilizada para serializar e deserializar objetos, fazendo  a transformação de objetos  java em outros formatos.
@@ -64,6 +74,7 @@
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-xml</artifactId>
 		</dependency>
+		
 	</dependencies>
 
 	<build>
