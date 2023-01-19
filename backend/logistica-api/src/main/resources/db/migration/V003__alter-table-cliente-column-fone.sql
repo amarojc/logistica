@@ -1,0 +1,1 @@
+alter table algalog.cliente rename column fone  to telefone;
