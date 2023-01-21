@@ -2,6 +2,8 @@ package br.com.amaro.logistica.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -40,13 +42,13 @@ public class ClienteController {
 		
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Cliente adicionar(@RequestBody Cliente cliente) {
+	public Cliente adicionar(@RequestBody @Valid Cliente cliente) {
 		return clienteRepository.save(cliente);
 	}
 	
 	@PutMapping("/{clienteId}")
 	public ResponseEntity<Cliente> atualizar(@PathVariable Long clienteId,
-					@RequestBody Cliente cliente){
+					@RequestBody  @Valid Cliente cliente){
 	
 		if(!clienteRepository.existsById(clienteId)) {
 			return ResponseEntity.notFound().build();
