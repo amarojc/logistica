@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.amaro.logistica.domain.model.Cliente;
-import br.com.amaro.logistica.domain.repository.ClienteRepository;
+import br.com.amaro.logistica.domain.service.CatalogoClienteService;
 import lombok.AllArgsConstructor;
 
 //Gerando um construtor, via lombok, com todas as propriedades de ClienteRepository
@@ -26,16 +26,16 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/clientes")
 public class ClienteController {
 
-	private ClienteRepository clienteRepository;
-
+	private CatalogoClienteService catalogoClienteService;
+	
 	@GetMapping
 	public List<Cliente> listarClientes(){
-			return clienteRepository.findAll();
+			return catalogoClienteService.buscarTodosClientes();
 	}
 	
 	@GetMapping("/{clienteId}")
 	public ResponseEntity<Cliente> buscar(@PathVariable Long clienteId){
-		return clienteRepository.findById(clienteId)
+		return catalogoClienteService.buscarCliente(clienteId)
 				.map(ResponseEntity::ok)
 				.orElse(ResponseEntity.notFound().build());
 	}
@@ -43,29 +43,28 @@ public class ClienteController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Cliente adicionar(@RequestBody @Valid Cliente cliente) {
-		return clienteRepository.save(cliente);
+		return catalogoClienteService.salvarCliente(cliente);
 	}
 	
 	@PutMapping("/{clienteId}")
 	public ResponseEntity<Cliente> atualizar(@PathVariable Long clienteId,
 					@RequestBody  @Valid Cliente cliente){
-	
-		if(!clienteRepository.existsById(clienteId)) {
+
+		if(!catalogoClienteService.buscarCliente(clienteId).isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
 		cliente.setId(clienteId);
-		cliente = clienteRepository.save(cliente);
+		cliente = catalogoClienteService.salvarCliente(cliente);
 		
 		return ResponseEntity.ok(cliente);
 	}
 	
 	@DeleteMapping("/{clienteId}")
 	public ResponseEntity<Void> remover(@PathVariable Long clienteId){
-		if(!clienteRepository.existsById(clienteId)) {
+		if(!catalogoClienteService.buscarCliente(clienteId).isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
-		
-		clienteRepository.deleteById(clienteId);
+		catalogoClienteService.excluirCliente(clienteId);
 		
 		return ResponseEntity.noContent().build();
 	}
