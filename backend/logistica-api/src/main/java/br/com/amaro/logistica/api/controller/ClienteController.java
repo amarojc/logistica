@@ -1,4 +1,4 @@
-package br.com.amaro.logistica.controller;
+package br.com.amaro.logistica.api.controller;
 
 import java.util.List;
 
