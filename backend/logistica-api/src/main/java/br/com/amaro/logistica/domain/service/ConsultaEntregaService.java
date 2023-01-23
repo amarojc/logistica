@@ -1,8 +1,9 @@
 package br.com.amaro.logistica.domain.service;
 
-import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,8 +18,9 @@ public class ConsultaEntregaService {
 	private EntregaRepository entregaRepository;
 	
 	@Transactional
-	public List<Entrega> listarEntregas(){
-		return entregaRepository.findAll();
+	public Page<Entrega> listarEntregas(Pageable pageable){
+		Page<Entrega> entregas = entregaRepository.findAll(pageable);
+		return entregas;
 	}
 	
 	@Transactional

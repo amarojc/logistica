@@ -1,9 +1,9 @@
 package br.com.amaro.logistica.api.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,8 +29,9 @@ public class ClienteController {
 	private CatalogoClienteService catalogoClienteService;
 	
 	@GetMapping
-	public List<Cliente> listarClientes(){
-			return catalogoClienteService.buscarTodosClientes();
+	public ResponseEntity<Page<Cliente>> listarClientes(Pageable pageable){
+		Page<Cliente> clientes = catalogoClienteService.buscarTodosClientes(pageable); 
+			return ResponseEntity.ok().body(clientes);
 	}
 	
 	@GetMapping("/{clienteId}")

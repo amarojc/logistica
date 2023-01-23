@@ -1,9 +1,9 @@
 package br.com.amaro.logistica.api.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,8 +34,9 @@ public class EntregaController {
 	}
 	
 	@GetMapping
-	public List<Entrega> listarEntregas(){
-		return consultaEntregaService.listarEntregas();
+	public ResponseEntity<Page<Entrega>> listarEntregas(Pageable pageable){
+		Page<Entrega> entregas = consultaEntregaService.listarEntregas(pageable);
+		return ResponseEntity.ok().body(entregas);
 	}
 	
 	@GetMapping("/{entregaId}")
