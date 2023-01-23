@@ -1,5 +1,7 @@
 package br.com.amaro.logistica.api.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +22,7 @@ public class EntregaController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Entrega solicitarEntregar(@RequestBody Entrega entrega) {
+	public Entrega solicitarEntregar(@RequestBody @Valid Entrega entrega) {
 		return solicitacaoEntregaService.solicitarEntrega(entrega);
 	}
 }
