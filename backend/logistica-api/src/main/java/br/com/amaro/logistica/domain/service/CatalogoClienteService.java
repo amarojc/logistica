@@ -56,4 +56,14 @@ public class CatalogoClienteService {
 	public void excluirCliente(Long clienteId) {
 		clienteRepository.deleteById(clienteId);
 	}
+	
+	/*
+	 Método para verificar se o cliente existe.
+	 Retorno o cliente caso ele exista, e 
+	Caso não exista, lanço uma exceção, passando uma lambda expression sem argumentos.
+  */
+	public Cliente buscar(Long clienteId) {
+		return clienteRepository.findById(clienteId)
+				.orElseThrow(() -> new NegocioException("Cliente não encontrado."));
+	}
 }
