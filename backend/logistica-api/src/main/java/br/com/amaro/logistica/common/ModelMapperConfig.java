@@ -12,7 +12,7 @@ adicionando métodos que definem beans Spring.
 public class ModelMapperConfig {
     /*
         Indicando que o método instância, inicializa e configura um bean que será gerenciado pelo Spring,
-        ficando disponível para ser injetado em outras classes.
+        ficando disponível para ser injetado em outras classes. 
      */	
     @Bean
     ModelMapper modelMapper() {

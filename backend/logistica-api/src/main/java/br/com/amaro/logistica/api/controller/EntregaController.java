@@ -2,7 +2,6 @@ package br.com.amaro.logistica.api.controller;
 
 import javax.validation.Valid;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -15,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.amaro.logistica.api.assembler.EntregaAssembler;
 import br.com.amaro.logistica.api.model.EntregaModel;
+import br.com.amaro.logistica.api.model.input.EntregaInput;
 import br.com.amaro.logistica.domain.model.Entrega;
 import br.com.amaro.logistica.domain.service.ConsultaEntregaService;
 import br.com.amaro.logistica.domain.service.SolicitacaoEntregaService;
@@ -28,33 +29,28 @@ public class EntregaController {
 
 	private SolicitacaoEntregaService solicitacaoEntregaService;
 	private ConsultaEntregaService consultaEntregaService;
-	
-	/* 
-	 Biblioteca java independende, não pertence ao eco-sistema do Spring.
-	 Necessário configurar o tipo ModelMapper para que possa se tornar um bean
-	 gerenciado pelo Spring.
-	*/
-	private ModelMapper modelMapper;
+	private EntregaAssembler entregaAssembler;
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Entrega solicitarEntregar(@RequestBody @Valid Entrega entrega) {
-		return solicitacaoEntregaService.solicitarEntrega(entrega);
+	public EntregaModel solicitarEntregar(@RequestBody @Valid EntregaInput  entregaInput) {
+		Entrega novaEntrega =  entregaAssembler.toEntity(entregaInput);
+		Entrega entregaCriada =	solicitacaoEntregaService.solicitarEntrega(novaEntrega); 
+		return entregaAssembler.toModel(entregaCriada); 
 	}
 	
 	@GetMapping
-	public ResponseEntity<Page<Entrega>> listarEntregas(Pageable pageable){
+	public ResponseEntity<Page<EntregaModel>> listarEntregas(Pageable pageable){
 		Page<Entrega> entregas = consultaEntregaService.listarEntregas(pageable);
-		return ResponseEntity.ok().body(entregas);
+		Page<EntregaModel> entregasModel = entregaAssembler.toCollectionModel(entregas);
+		return ResponseEntity.ok().body(entregasModel);
 	}
 	
 	@GetMapping("/{entregaId}")
 	public ResponseEntity<EntregaModel> buscarEntrega(@PathVariable Long entregaId){
-		return consultaEntregaService.buscar(entregaId)
-				.map(entrega -> {
-					//modelMapper, passando o objeto (entrega) e o tipo de destino que será convertido (EntregaDTO).
-					EntregaModel entregaModel = modelMapper.map(entrega, EntregaModel.class);
-					return ResponseEntity.ok().body(entregaModel);
-				})	.orElse(ResponseEntity.notFound().build());
-	}	
+		   return consultaEntregaService.buscar(entregaId)
+					.map(entrega -> ResponseEntity.ok().body(entregaAssembler.toModel(entrega)))
+					.orElse(ResponseEntity.notFound().build());
+		}
+		
 }

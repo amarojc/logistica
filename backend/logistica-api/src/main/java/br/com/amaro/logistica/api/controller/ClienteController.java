@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.amaro.logistica.api.assembler.ClienteAssembler;
+import br.com.amaro.logistica.api.model.ClienteModel;
+import br.com.amaro.logistica.api.model.input.ClienteInput;
 import br.com.amaro.logistica.domain.model.Cliente;
 import br.com.amaro.logistica.domain.service.CatalogoClienteService;
 import lombok.AllArgsConstructor;
@@ -27,37 +30,43 @@ import lombok.AllArgsConstructor;
 public class ClienteController {
 
 	private CatalogoClienteService catalogoClienteService;
+	private ClienteAssembler clienteAssembler;
 	
 	@GetMapping
-	public ResponseEntity<Page<Cliente>> listarClientes(Pageable pageable){
+	public ResponseEntity<Page<ClienteModel>> listarClientes(Pageable pageable){
 		Page<Cliente> clientes = catalogoClienteService.buscarTodosClientes(pageable); 
-			return ResponseEntity.ok().body(clientes);
+		Page<ClienteModel> clientesModel = clienteAssembler.toCollectionModel(clientes);
+			return ResponseEntity.ok().body(clientesModel);
 	}
 	
 	@GetMapping("/{clienteId}")
-	public ResponseEntity<Cliente> buscar(@PathVariable Long clienteId){
+	public ResponseEntity<ClienteModel> buscar(@PathVariable Long clienteId){
 		return catalogoClienteService.buscarCliente(clienteId)
-				.map(ResponseEntity::ok)
+				.map(cliente -> ResponseEntity.ok().body(clienteAssembler.toModel(cliente)))
 				.orElse(ResponseEntity.notFound().build());
 	}
 		
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Cliente adicionar(@RequestBody @Valid Cliente cliente) {
-		return catalogoClienteService.salvarCliente(cliente);
+	public ClienteModel adicionar(@RequestBody @Valid ClienteInput clienteInput) {
+		Cliente novoCliente = clienteAssembler.toEntity(clienteInput);
+		Cliente clienteCriado = catalogoClienteService.salvarCliente(novoCliente);
+		return clienteAssembler.toModel(clienteCriado);
 	}
 	
 	@PutMapping("/{clienteId}")
-	public ResponseEntity<Cliente> atualizar(@PathVariable Long clienteId,
-					@RequestBody  @Valid Cliente cliente){
+	public ResponseEntity<ClienteModel> atualizar(@PathVariable Long clienteId,
+					@RequestBody  @Valid ClienteModel clienteModel){
 
 		if(!catalogoClienteService.buscarCliente(clienteId).isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
-		cliente.setId(clienteId);
-		cliente = catalogoClienteService.salvarCliente(cliente);
+				
+		clienteModel.setId(clienteId);
+		Cliente cliente =  catalogoClienteService.salvarCliente(
+				clienteAssembler.modelToEntity(clienteModel));
 		
-		return ResponseEntity.ok(cliente);
+		return ResponseEntity.ok(clienteAssembler.toModel(cliente));
 	}
 	
 	@DeleteMapping("/{clienteId}")

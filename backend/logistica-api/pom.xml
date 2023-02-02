@@ -78,7 +78,8 @@
     		<version>3.0.0</version>
 		</dependency>
 
-		<!-- Dependência para utilizar o formato xml. Utilizada para serializar 
+		<!-- 
+		    Dependência para utilizar o formato xml. Utilizada para serializar 
 			e deserializar objetos, fazendo a transformação de objetos java em outros 
 			formatos. Por padrão o Spring utiliza o formato json. 
 			<dependency> 
