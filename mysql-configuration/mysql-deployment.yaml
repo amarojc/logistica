@@ -1,0 +1,46 @@
+# Especificando a máquina virtual (VM) e definindo a imagem do Docker que será utiliza
+# quais recursos que a MV irá precisar para atuar (CPU, memória, GPU) 
+# qual a porta que irá executar e outras propriedades.
+
+# A partir deste deployment o Kubernetes irá criar um/mais Pods, que são como
+# instâncias de um deployment.
+
+# Pods - É a máquina rodando no cluster e contém um/mais contêineres sendo executados,
+# um IP real dentro do cluster, espaço para armazenamento e utiliza recursos da máquina.
+
+# metadata - define o nome do deployment
+# label - referenciando o deployment
+# spec - Define um/lista de contêineres que executarão na MV.
+# name - define o nome do contêinere
+# image - Qual image do Docker será executada
+# ports - Define qual porta do contêiner estará aberta para requisições
+# env - Define um conjunto de variáveis de ambiente.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0.31
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_DATABASE
+              value: algalog
+            - name: MYSQL_ROOT_PASSWORD
+              value: root
+
+

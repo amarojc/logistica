@@ -1,0 +1,41 @@
+# Configurando o acesso externo direto ao cluster, 
+# redirecionando um acesso para Service de uma aplicação.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gateway-ingress-logistica
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "32k"
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-body-size: "512m"
+    kubernetes.io/ingress.class: "nginx"
+spec:
+ rules:
+   - host: localhost
+     http:
+       paths:
+         - path: /entregas
+           pathType: Prefix
+           backend:
+             service:
+               name: logistica-api
+               port:
+                 number: 8080
+         - path: /clientes
+           pathType: Prefix
+           backend:
+             service:
+               name: logistica-api
+               port:
+                 number: 8080    
+         - path: /entregas/${entregaId}/ocorrencias
+           pathType: Prefix
+           backend:
+             service:
+               name: logistica-api
+               port:
+                 number: 8080      
+    

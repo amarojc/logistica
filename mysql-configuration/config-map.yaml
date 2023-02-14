@@ -1,0 +1,13 @@
+# Config Maps é uma forma de armazenar configurações necessárias 
+# para as aplicações de maneira simples dentro do cluster.
+# Aqui estou armazenando os dados para a conexão com o MySQL.
+# Essas configurações podem ser acessadas pelas aplicações utilizando
+# as variáveis de ambiente que são criadas nos Deployment.
+kind: ConfigMap
+apiVersion: v1
+metadata:
+ name: mysql-configmap
+data:
+ database_url: jdbc:mysql://mysql:3306/algalog?createDatabaseIfNotExist=true&serverTimezone=UTC
+ database_user: root
+ database_password: root

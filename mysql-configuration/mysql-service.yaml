@@ -1,0 +1,16 @@
+# Os Pods recebem um IP durante a sua criação, 
+# e caso um Pod de um Deployment for reiniciado, o IP poderá mudar.
+# Solução: Expor o(s) Pod(s) em um endereço que não será alterado,
+# criando um servico para o Deployment do mysql-deployment, por exemplo.
+apiVersion: v1
+kind: Service
+metadata:
+ name: mysql
+ labels:
+   run: mysql
+spec:
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+    app: mysql
