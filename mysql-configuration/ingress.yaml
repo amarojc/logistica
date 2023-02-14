@@ -17,6 +17,13 @@ spec:
    - host: localhost
      http:
        paths:
+         - path: /clientes
+           pathType: Prefix
+           backend:
+             service:
+               name: logistica-api
+               port:
+                 number: 8080              
          - path: /entregas
            pathType: Prefix
            backend:
@@ -24,13 +31,20 @@ spec:
                name: logistica-api
                port:
                  number: 8080
-         - path: /clientes
+         - path: /entregas/${entregaId}/cancelar
            pathType: Prefix
            backend:
              service:
                name: logistica-api
                port:
-                 number: 8080    
+                 number: 8080
+         - path: /entregas/${entregaId}/finalizar
+           pathType: Prefix
+           backend:
+             service:
+               name: logistica-api
+               port:
+                 number: 8080                       
          - path: /entregas/${entregaId}/ocorrencias
            pathType: Prefix
            backend:
