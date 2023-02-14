@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logistica-api
+  labels:
+    app: logistica-api
+spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: logistica-api
+    template:
+      metadata:
+        labels:
+          app: logistica-api
+      spec:
+          containers:
+              - name: logistica-api
+                image: logistica/logistica-api
+                imagePullPolicy: Never
+                ports:
+                  - containerPort: 8080
+                env:
+                  - name: MYSQL_URL
+                    valueFrom:
+                      configMapKeyRef:
+                        name: mysql-configmap
+                        key: database_url
+                  - name: MYSQL_USER
+                    valueFrom:
+                      configMapKeyRef:
+                        name: mysql-configmap
+                        key: database_user     
+                  - name: MYSQL_PASSWORD
+                    valueFrom:
+                      configMapKeyRef:
+                        name: mysql-configmap
+                        key: database_password
