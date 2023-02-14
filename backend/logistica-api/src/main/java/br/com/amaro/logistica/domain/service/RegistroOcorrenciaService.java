@@ -15,7 +15,7 @@ public class RegistroOcorrenciaService {
 	
 	@Transactional
 	public Ocorrencia registrarOcorrencia(Long entregaId, String descricaoOcorrencia) {
-		Entrega entrega = consultaEntregaService.buscar(entregaId).get();
+		Entrega entrega = consultaEntregaService.verificarEntrega(entregaId);
 		return entrega.adicionarOcorrencia(descricaoOcorrencia);
 	}
 }

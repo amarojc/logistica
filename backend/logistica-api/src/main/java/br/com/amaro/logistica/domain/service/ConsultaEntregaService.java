@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.amaro.logistica.domain.exception.NegocioException;
 import br.com.amaro.logistica.domain.model.Entrega;
 import br.com.amaro.logistica.domain.repository.EntregaRepository;
 import lombok.AllArgsConstructor;
@@ -28,5 +29,10 @@ public class ConsultaEntregaService {
 		return entregaRepository.findById(entregaId);
 	}
 	
+	@Transactional
+	public Entrega verificarEntrega(Long idEntrega) {
+		return buscar(idEntrega)
+				.orElseThrow(() -> new NegocioException("Entrega não encontrado."));
+	}
 	
 }
