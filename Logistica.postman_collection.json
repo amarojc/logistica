@@ -1,0 +1,357 @@
+{
+	"info": {
+		"_postman_id": "972598b8-6d20-4ec3-8e37-b82e056bd6c2",
+		"name": "Logistica",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22656568"
+	},
+	"item": [
+		{
+			"name": "Clientes",
+			"item": [
+				{
+					"name": "Clientes - Listar",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost/clientes",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clientes - Obter",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost/clientes/1",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"clientes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clientes - Excluir",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost/clientes/10",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"clientes",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clientes - Adcionar",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Zé Carioca\",\r\n    \"email\": \"ze@mail.com\",\r\n    \"telefone\":\"21 95555-4444\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/clientes/",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"clientes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clientes - Atualizar",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\":  \"Logan\",\r\n    \"email\": \"logan@mail.com\",\r\n    \"telefone\":\"21 97888-7588\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/clientes/11",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"clientes",
+								"11"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Entregas",
+			"item": [
+				{
+					"name": "Entregas - Solicitar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cliente\": {\r\n        \"id\": 5\r\n    },\r\n    \"destinatario\":{\r\n        \"nome\": \"Maria das Rosas\",\r\n        \"logradouro\": \"Rua dos Cravos\",\r\n        \"complemento\": \"casa 1\",\r\n        \"numero\": \"123\",\r\n        \"bairro\": \"Centro\"\r\n    },\r\n    \"taxa\":100.50\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/entregas",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"entregas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Entregas - Listar",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cliente\": {\r\n        \"id\": 5\r\n    },\r\n    \"destinatario\":{\r\n        \"nome\": \"Maria das Rosas\",\r\n        \"logradouro\": \"Rua dos Cravos\",\r\n        \"complemento\": \"casa 1\",\r\n        \"numero\": \"123\",\r\n        \"bairro\": \"Centro\"\r\n    },\r\n    \"taxa\":100.50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/entregas",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"entregas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Entregas - Obter",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cliente\": {\r\n        \"id\": 5\r\n    },\r\n    \"destinatario\":{\r\n        \"nome\": \"Maria das Rosas\",\r\n        \"logradouro\": \"Rua dos Cravos\",\r\n        \"complemento\": \"casa 1\",\r\n        \"numero\": \"123\",\r\n        \"bairro\": \"Centro\"\r\n    },\r\n    \"taxa\":100.50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/entregas/1",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"entregas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Entrega - cancelar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost/entregas/1/cancelar",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"entregas",
+								"1",
+								"cancelar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Entrega - Finalizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost/entregas/1/finalizar",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"entregas",
+								"1",
+								"finalizar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ocorrencias",
+			"item": [
+				{
+					"name": "Ocorrencias - Listar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/entregas/1/ocorrencias",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"entregas",
+								"1",
+								"ocorrencias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ocorrencia - Registrar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"descricao\": \"Tentativa 2 - entrega não realizada.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost/entregas/1/ocorrencias",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"entregas",
+								"1",
+								"ocorrencias"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
