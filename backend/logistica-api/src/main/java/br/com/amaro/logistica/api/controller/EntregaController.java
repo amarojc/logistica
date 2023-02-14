@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -18,7 +19,9 @@ import br.com.amaro.logistica.api.assembler.EntregaAssembler;
 import br.com.amaro.logistica.api.model.EntregaModel;
 import br.com.amaro.logistica.api.model.input.EntregaInput;
 import br.com.amaro.logistica.domain.model.Entrega;
+import br.com.amaro.logistica.domain.service.CancelarEntregaService;
 import br.com.amaro.logistica.domain.service.ConsultaEntregaService;
+import br.com.amaro.logistica.domain.service.FinalizacaoEntregaService;
 import br.com.amaro.logistica.domain.service.SolicitacaoEntregaService;
 import lombok.AllArgsConstructor;
 
@@ -30,12 +33,15 @@ public class EntregaController {
 	private SolicitacaoEntregaService solicitacaoEntregaService;
 	private ConsultaEntregaService consultaEntregaService;
 	private EntregaAssembler entregaAssembler;
+	private FinalizacaoEntregaService finalizacaoEntregaService;
+	private CancelarEntregaService cancelarEntrega;
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public EntregaModel solicitarEntregar(@RequestBody @Valid EntregaInput  entregaInput) {
 		Entrega novaEntrega =  entregaAssembler.toEntity(entregaInput);
-		Entrega entregaCriada =	solicitacaoEntregaService.solicitarEntrega(novaEntrega); 
+		Entrega entregaCriada =	solicitacaoEntregaService.solicitarEntrega(novaEntrega);
+		
 		return entregaAssembler.toModel(entregaCriada); 
 	}
 	
@@ -53,4 +59,15 @@ public class EntregaController {
 					.orElse(ResponseEntity.notFound().build());
 		}
 		
+	@PutMapping("/{entregaId}/finalizar")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void finalizarEntrega(@PathVariable Long entregaId) {
+		finalizacaoEntregaService.finalizarEntrega(entregaId);
+	}
+	
+	@PutMapping("/{entregaId}/cancelar")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void cancelarEntrega(@PathVariable Long entregaId) {
+		cancelarEntrega.cancelarEntrega(entregaId);
+	}
 }
