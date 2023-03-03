@@ -53,6 +53,73 @@ A aplicação se comunica com o banco de dados algalog.
 Caso queira alterar o nome do banco de dados, altere o arquivo application.properties do projeto.<br>
 Utilizando o docker compose, o banco de dados também é criado automaticamente.
 
+
+#
+### Execução do projeto
+A forma mais simples de executar o projeto é através do gerenciador de dependências Maven.
+
+> Instalando o Maven (Caso não tenha instalado na máquina)
+* Pré-requisito JDK 1.7 ou superior, de preferência a mesma versão projeto.
+* Necessário configurar a variável de ambiente JAVA_HOME, no computador.
+* Faça o download do maven (https://maven.apache.org/download.cgi), 
+existem vários formatos, mas eu sugiro o **-bin.zip** (apache-maven-3.9.0-bin.zip), por ser o mais comum.
+* Ao final do download do arquivo, descompacte em um pasta de sua preferência (Importante: Essa será a pasta que o maven será instalado).
+* Configurando as variáveis de ambiente: <br>
+Para o maven funcionar basta adicionar a pasta **bin** do maven na variável de ambiente **PATH**.
+* Para testar e verificar se ocorreu tudo ok com a instalação do maven, digite no cmd o comando **mvn**
+
+Aparecendo algo como a mensagem abaixo é porque está tudo ok para utiliza-lo.
+<br>
+C:\WINDOWS\system32>mvn<br>
+[INFO] Scanning for projects...<br>
+[INFO] ------------------------------------------------------------------------<br>
+[INFO] BUILD FAILURE<br>
+[INFO] ------------------------------------------------------------------------<br>
+[INFO] Total time:  0.143 s<br>
+[INFO] Finished at: 2023-02-20T10:42:26-03:00<br>
+[INFO] ------------------------------------------------------------------------<br>
+
+<br>
+
+### Rodando o projeto
+
+1. Faça o download do projeto para sua máquina.<br>
+
+2. Descompacte o arquivo ZIP localmente<br>
+
+
+> **Warning**
+> Necessário alterar o **datasource** dentro do arquivo **application.properties** do projeto.
+
+```diff
+spring.datasource.url=jdbc:mysql://localhost:3306/algalog
+spring.datasource.username= SEU_USER_NAME
+spring.datasource.password= SUA_SENHA
+```
+
+3. Acesse a pasta descompactada pelo prompt de comando. Abra o prompt de comando e acesse a pasta descompactada até a pasta **logistica-api**.<br> 
+Exemplo: **cd logistica-main\backend\logistica-api**
+
+4. Baixando as dependências do projeto<br>
+Execute o comando **mvn clean install** para baixar as dependências do projeto através do maven. <br>
+Você também pode utilizar o _mvnw_ que vem no arquivo ZIP do mesmo jeito mvn clean install.<br><br>
+
+5. Execute aplicação<br>
+Execute o comando **mvn spring-boot:run** para executar a sua aplicação. <br>
+Você também pode utilizar o mvnw que vem no arquivo ZIP do mesmo jeito mvnw spring-boot:run.<br><br>
+
+A mensagem que aparece no final "Tomcat started on port(s): 8080 (http)" significa que a sua aplicação web já está rodando na porta 8080.<br>
+
+> **Note**:
+> Caso queria mudar a porta  insira o comando no arquivo **application.properties** do projeto.
+```diff
+# Application port
+server.port=808X
+```
+
+6. Você pode acessar todos os endpoints da aplicação através do Postman, disponível em: Logistica.postman_collection.json<br>
+Endpoint de entregas: http://localhost:8080/entregas
+ 
 #
 ### Docker[^2] 
 
